@@ -10,6 +10,7 @@ using namespace std;
 
 int countNeighbors(int  **grid, int row, int col, int dimension);
 void printGrid(int **grid, int dimension);
+void copyGrid(int **gridAfterIteration, int** grid, int dimension);
 
 int main(int argc, char* argv[]){
 
@@ -55,7 +56,9 @@ int main(int argc, char* argv[]){
 	printGrid(grid, dimension);
 
     //iteration
-    for (int i = 0; i < dimension; i++)
+	for (int k = 0; k < iterationsNumer; k++)
+	{
+		for (int i = 0; i < dimension; i++)
     {
         for (int j = 0; j < dimension; j++) {
             
@@ -83,12 +86,12 @@ int main(int argc, char* argv[]){
     }
 
 
-    // copy new grid to grid 
-    //memcpy (grid, gridAfterIteration, dimension * dimension *sizeof(int));
-    std::copy(&gridAfterIteration[0][0], &gridAfterIteration[0][0]+dimension*dimension,&grid[0][0]);
-
+    copyGrid(gridAfterIteration, grid, dimension);
     //print new grid
-    printGrid(grid, dimension);
+    printGrid(gridAfterIteration, dimension);
+	}
+
+    
    	//free grid
     for (int i = 0; i < dimension; i++) {
         delete[] grid[i];
@@ -135,4 +138,13 @@ void printGrid(int **grid, int dimension){
         cout << endl;
     }
     cout<<endl;
+}
+void copyGrid(int **gridAfterIteration, int** grid, int dimension){
+	for (int i = 0; i < dimension; i++)
+    {
+    	for (int j = 0; j < dimension; j++)
+    	{
+    		grid[i][j] = gridAfterIteration[i][j];
+    	}
+    }
 }
