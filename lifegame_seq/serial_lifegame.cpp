@@ -5,12 +5,16 @@
 #include <string>
 #include <sstream>
 #include <cstring>
+#include "EasyBMP.hpp"
 
+const EasyBMP::RGBColor black(0, 0, 0);
+const EasyBMP::RGBColor white(255, 255, 255);   
 using namespace std;
 
 int countNeighbors(int  **grid, int row, int col, int dimension);
 void printGrid(int **grid, int dimension);
 void copyGrid(int **gridAfterIteration, int** grid, int dimension);
+void saveToFile(int **grid, int dimension, int iterNumber);
 
 int main(int argc, char* argv[]){
 
@@ -19,6 +23,9 @@ int main(int argc, char* argv[]){
 	string initFilename = argv[3]; // plik początkowy - inicjalizacja
 	bool saveOutput = atoi(argv[4]); // czy zapisywać wyjście do pliku
 
+	//define colors
+	// EasyBMP::RGBColor black(0, 0, 0);
+	// EasyBMP::RGBColor white(255, 255, 255);    
 
 	cout<<"window size "<< dimension<<" initFilename "<< initFilename<<endl;
 
@@ -88,10 +95,14 @@ int main(int argc, char* argv[]){
 
     copyGrid(gridAfterIteration, grid, dimension);
     //print new grid
-    printGrid(gridAfterIteration, dimension);
+    //printGrid(gridAfterIteration, dimension);
+
+    if (saveOutput)
+    {
+    	saveToFile(gridAfterIteration, dimension, k);
+    }
 	}
 
-    
    	//free grid
     for (int i = 0; i < dimension; i++) {
         delete[] grid[i];
@@ -147,4 +158,27 @@ void copyGrid(int **gridAfterIteration, int** grid, int dimension){
     		grid[i][j] = gridAfterIteration[i][j];
     	}
     }
+}
+void saveToFile(int **grid, int dimension, int iterNumber){
+	ofstream openfile("output/" + to_string(iterNumber+1) + ".txt");
+
+	EasyBMP::Image image(dimension, dimension, "img_out/sample" + to_string(iterNumber+1) + ".bmp", black);
+
+    if (!openfile.good()) {
+    	cout << "Couldn't open the file.\n";
+    	return;
+	}
+	else{
+		for (int i = 0; i < dimension; i++){
+        		for (int j = 0; j < dimension; j++) {
+        			int tmp = grid[i][j];
+            		openfile << tmp;
+            		openfile <<" ";
+            		image.SetPixel(i, j, tmp == 1 ? white : black);
+        		}
+        		openfile << "\n";
+			}
+	}
+	image.Write();
+	openfile.close();
 }
