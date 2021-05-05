@@ -1,0 +1,39 @@
+--------------------------------------------------------------------------
+WARNING: Linux kernel CMA support was requested via the
+btl_vader_single_copy_mechanism MCA variable, but CMA support is
+not available due to restrictive ptrace settings.
+
+The vader shared memory BTL will fall back on another single-copy
+mechanism if one is available. This may result in lower performance.
+
+  Local host: DESKTOP-781O8I6
+--------------------------------------------------------------------------
+[DESKTOP-781O8I6:01861] *** Process received signal ***
+[DESKTOP-781O8I6:01861] Signal: Segmentation fault (11)
+[DESKTOP-781O8I6:01861] Signal code: Address not mapped (1)
+[DESKTOP-781O8I6:01861] Failing at address: 0x48
+[DESKTOP-781O8I6:01862] *** Process received signal ***
+[DESKTOP-781O8I6:01862] Signal: Segmentation fault (11)
+[DESKTOP-781O8I6:01862] Signal code: Address not mapped (1)
+[DESKTOP-781O8I6:01862] Failing at address: 0x48
+[DESKTOP-781O8I6:01861] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7f35568f6210]
+[DESKTOP-781O8I6:01861] [ 1] /lib/x86_64-linux-gnu/libc.so.6(cfree+0x20)[0x7f355694d870]
+[DESKTOP-781O8I6:01861] [ 2] ./vertical_lifegame(+0x10708)[0x7f3556e65708]
+[DESKTOP-781O8I6:01861] [ 3] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f35568d70b3]
+[DESKTOP-781O8I6:01862] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7f2c04a26210]
+[DESKTOP-781O8I6:01862] [ 1] /lib/x86_64-linux-gnu/libc.so.6(cfree+0x20)[0x7f2c04a7d870]
+[DESKTOP-781O8I6:01862] [ 2] ./vertical_lifegame(+0x10708)[0x7f2c04f95708]
+[DESKTOP-781O8I6:01862] [ 3] [DESKTOP-781O8I6:01861] [ 4] ./vertical_lifegame(+0xda2e)[0x7f3556e62a2e]
+[DESKTOP-781O8I6:01861] *** End of error message ***
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f2c04a070b3]
+[DESKTOP-781O8I6:01862] [ 4] ./vertical_lifegame(+0xda2e)[0x7f2c04f92a2e]
+[DESKTOP-781O8I6:01862] *** End of error message ***
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpiexec noticed that process rank 0 with PID 1861 on node DESKTOP-781O8I6 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+[DESKTOP-781O8I6:01857] 1 more process has sent help message help-btl-vader.txt / cma-permission-denied
+[DESKTOP-781O8I6:01857] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
