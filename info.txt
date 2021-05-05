@@ -2,5 +2,14 @@ example - przykład z neta
 lifegame_seq -- mój program szeregowy
 do uruchomienia podajemy 4 parametry: wymiar macierzy, ile iteracji, pliki inicjalizacyjny, czy zapisywać wyjście --- ./serial_lifegame 5 6 init.txt 1
 
-parametry ile iteracji i czy zapisać wyjście do pliku na razie nie używane
-nowe stany nie do końca jeszcze dobrze sie przeliczają
+przykład urucho ienia
+kompilacja 
+g++ serial_lifegame.cpp -o serial_lifegame
+./serial_lifegame 128 100 init128.txt 0
+
+vertical lifegame - wersja równoległa z podziałem na wiersze
+
+kompilacja 
+mpicxx -o vertical_lifegame -O vertical_lifegame.cpp
+uruchomienie 
+sbatch vertical_lifegame.sh 128 100 init128.txt 0

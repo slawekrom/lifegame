@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <cstring>
+#include <chrono>
 #include "EasyBMP.hpp"
 
 const EasyBMP::RGBColor black(0, 0, 0);
@@ -21,13 +22,8 @@ int main(int argc, char* argv[]){
 	int dimension = atoi(argv[1]); // rozmiar macierzy - bok
 	int iterationsNumer = atoi(argv[2]); // ile iteracji
 	string initFilename = argv[3]; // plik początkowy - inicjalizacja
-	bool saveOutput = atoi(argv[4]); // czy zapisywać wyjście do pliku
+	bool saveOutput = atoi(argv[4]); // czy zapisywać wyjście do pliku   
 
-	//define colors
-	// EasyBMP::RGBColor black(0, 0, 0);
-	// EasyBMP::RGBColor white(255, 255, 255);    
-
-	cout<<"window size "<< dimension<<" initFilename "<< initFilename<<endl;
 
 	int** grid = new int*[dimension];
 
@@ -42,7 +38,7 @@ int main(int argc, char* argv[]){
     }
 
     // load from file
-    ifstream openfile(initFilename);
+    ifstream openfile(initFilename, ios::in | ios::binary);
     if (!openfile.good()) {
     	cout << "Couldn't open the file.\n";
     	return 1;
@@ -59,10 +55,14 @@ int main(int argc, char* argv[]){
 		}
 	}
 
-	//print load data
-	printGrid(grid, dimension);
+
+	//save init grid to image
+	if (saveOutput){
+		saveToFile(grid, dimension, 0);
+	}
 
     //iteration
+    auto start_time = std::chrono::high_resolution_clock::now();
 	for (int k = 0; k < iterationsNumer; k++)
 	{
 		for (int i = 0; i < dimension; i++)
@@ -95,14 +95,16 @@ int main(int argc, char* argv[]){
 
     copyGrid(gridAfterIteration, grid, dimension);
     //print new grid
-    //printGrid(gridAfterIteration, dimension);
-
-    if (saveOutput)
-    {
+    //printGrid(gridAfterIteration, dimension)
+    if (saveOutput){
     	saveToFile(gridAfterIteration, dimension, k);
     }
 	}
 
+	auto end_time = std::chrono::high_resolution_clock::now();
+	auto time = end_time - start_time;    
+    cout<<"matrix size: "<<dimension<<" iterations: "<<iterationsNumer<<" time: "<<time/std::chrono::milliseconds(1)<<endl;    
+	 
    	//free grid
     for (int i = 0; i < dimension; i++) {
         delete[] grid[i];
@@ -162,7 +164,7 @@ void copyGrid(int **gridAfterIteration, int** grid, int dimension){
 void saveToFile(int **grid, int dimension, int iterNumber){
 	ofstream openfile("output/" + to_string(iterNumber+1) + ".txt");
 
-	EasyBMP::Image image(dimension, dimension, "img_out/sample" + to_string(iterNumber+1) + ".bmp", black);
+	EasyBMP::Image image(dimension, dimension, "img_out/sample" + to_string(iterNumber+1) + ".bmp");
 
     if (!openfile.good()) {
     	cout << "Couldn't open the file.\n";
@@ -174,7 +176,7 @@ void saveToFile(int **grid, int dimension, int iterNumber){
         			int tmp = grid[i][j];
             		openfile << tmp;
             		openfile <<" ";
-            		image.SetPixel(i, j, tmp == 1 ? white : black);
+            		image.SetPixel(j, i, tmp == 1 ? white : black);
         		}
         		openfile << "\n";
 			}

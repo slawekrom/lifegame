@@ -6,6 +6,7 @@
 #include <sstream>
 #include <cstring>
 #include <mpi.h>
+#include <chrono>
 #include "EasyBMP.hpp"
 
 const EasyBMP::RGBColor black(0, 0, 0);
@@ -101,7 +102,7 @@ int main(int argc, char* argv[]){
     }
 
     // iteration
-        
+    auto start_time = std::chrono::high_resolution_clock::now();
 
     for (int k = 0; k < iterationsNumer; k++){
         //jeśli zapis do pliku jest włączony to tworzymy proces nadrzędny, który będzie zbierał wyniki z procesów podrzędnych 
@@ -200,8 +201,8 @@ int main(int argc, char* argv[]){
                 gridAfterIteration[0][j] = 1;
             }
         }
-        printf("\n");
-        printGrid(gridAfterIteration, process_rows_number, dimension, 0, 0); 
+        // printf("\n");
+        // printGrid(gridAfterIteration, process_rows_number, dimension, 0, 0); 
         copyGrid(gridAfterIteration, grid, dimension, process_rows_number);
         if (saveOutput){
             sendGrid(gridAfterIteration, process_rows_number, dimension, process_rank);
@@ -271,10 +272,11 @@ int main(int argc, char* argv[]){
         sendGrid(gridAfterIteration, process_rows_number, dimension, process_rank);
     }
     }
-
-       
-
-
+    if (process_rank == 0){
+        auto end_time = std::chrono::high_resolution_clock::now();
+        auto time = end_time - start_time;    
+        cout<<"matrix size: "<<dimension<<" iterations: "<<iterationsNumer<<" time: "<<time/std::chrono::milliseconds(1)<<endl;          
+    }
 
     for (int i = 0; i < dimension; i++) {
         delete[] grid[i];
