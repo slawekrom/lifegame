@@ -113,14 +113,16 @@ int main(int argc, char* argv[]){
             MPI_Status Status;
             for (int i = 1; i < size; i++){
                 
-                for (int j = 0; j < dimension; j++){
+                for (int j = 0; j < process_rows_number; j++){
                     MPI_Recv(recievedRow, dimension, MPI_INT, i, MPI_ANY_TAG, MPI_COMM_WORLD, &Status);
                     int rowNumber = Status.MPI_TAG;
                     memcpy(matrix[rowNumber], recievedRow, sizeof(int) * dimension);
                 }
             }
+	    printf("dupa 1");
             saveToFile(matrix, dimension, k);
-        }
+            printf("no elo juz po");
+	}
     }
 
     if (process_rank == firstCalcProcRank) // proces pierwszy
@@ -216,8 +218,8 @@ int main(int argc, char* argv[]){
         MPI_Isend(grid[0], dimension, MPI_INT, process_rank-1, 0, MPI_COMM_WORLD,  &requests[0]);
         MPI_Irecv(rowUp, dimension, MPI_INT, process_rank-1, 0, MPI_COMM_WORLD, &requests[1]);
         //wysyła i odbiera z dołu
-        MPI_Isend(grid[process_rows_number-1], dimension, MPI_INT, process_rank+1, 0, MPI_COMM_WORLD,  &requests[3]);
-        MPI_Irecv(rowDown, dimension, MPI_INT, process_rank+1, 0, MPI_COMM_WORLD, &requests[4]);   
+        MPI_Isend(grid[process_rows_number-1], dimension, MPI_INT, process_rank+1, 0, MPI_COMM_WORLD,  &requests[2]);
+        MPI_Irecv(rowDown, dimension, MPI_INT, process_rank+1, 0, MPI_COMM_WORLD, &requests[3]);   
 
         // iteracja "srodkowa"
         iterate(grid, gridAfterIteration, dimension, process_rows_number, 1, 1);

@@ -1,39 +1,47 @@
---------------------------------------------------------------------------
-WARNING: Linux kernel CMA support was requested via the
-btl_vader_single_copy_mechanism MCA variable, but CMA support is
-not available due to restrictive ptrace settings.
-
-The vader shared memory BTL will fall back on another single-copy
-mechanism if one is available. This may result in lower performance.
-
-  Local host: DESKTOP-781O8I6
---------------------------------------------------------------------------
-[DESKTOP-781O8I6:02398] *** Process received signal ***
-[DESKTOP-781O8I6:02398] Signal: Segmentation fault (11)
-[DESKTOP-781O8I6:02398] Signal code: Address not mapped (1)
-[DESKTOP-781O8I6:02398] Failing at address: 0x89
-[DESKTOP-781O8I6:02397] *** Process received signal ***
-[DESKTOP-781O8I6:02397] Signal: Segmentation fault (11)
-[DESKTOP-781O8I6:02397] Signal code: Address not mapped (1)
-[DESKTOP-781O8I6:02397] Failing at address: 0x89
-[DESKTOP-781O8I6:02398] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7fada74f6210]
-[DESKTOP-781O8I6:02398] [ 1] /lib/x86_64-linux-gnu/libc.so.6(cfree+0x20)[0x7fada754d870]
-[DESKTOP-781O8I6:02398] [ 2] [DESKTOP-781O8I6:02397] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7f328d126210]
-[DESKTOP-781O8I6:02397] [ 1] /lib/x86_64-linux-gnu/libc.so.6(cfree+0x20)[0x7f328d17d870]
-[DESKTOP-781O8I6:02397] [ 2] ./vertical_lifegame(+0x107d2)[0x7fada7a627d2]
-[DESKTOP-781O8I6:02398] [ 3] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fada74d70b3]
-[DESKTOP-781O8I6:02398] [ 4] ./vertical_lifegame(+0xda6e)[0x7fada7a5fa6e]
-[DESKTOP-781O8I6:02398] *** End of error message ***
-./vertical_lifegame(+0x107d2)[0x7f328d6907d2]
-[DESKTOP-781O8I6:02397] [ 3] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f328d1070b3]
-[DESKTOP-781O8I6:02397] [ 4] ./vertical_lifegame(+0xda6e)[0x7f328d68da6e]
-[DESKTOP-781O8I6:02397] *** End of error message ***
+[DESKTOP-R92CLF9:00859] *** Process received signal ***
+[DESKTOP-R92CLF9:00859] Signal: Segmentation fault (11)
+[DESKTOP-R92CLF9:00859] Signal code: Address not mapped (1)
+[DESKTOP-R92CLF9:00859] Failing at address: (nil)
+[DESKTOP-R92CLF9:00857] *** Process received signal ***
+[DESKTOP-R92CLF9:00857] Signal: Segmentation fault (11)
+[DESKTOP-R92CLF9:00857] Signal code: Address not mapped (1)
+[DESKTOP-R92CLF9:00857] Failing at address: (nil)
+[DESKTOP-R92CLF9:00859] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7f32e9c2a210]
+[DESKTOP-R92CLF9:00859] [ 1] [DESKTOP-R92CLF9:00858] *** Process received signal ***
+[DESKTOP-R92CLF9:00858] Signal: Segmentation fault (11)
+[DESKTOP-R92CLF9:00858] Signal code: Address not mapped (1)
+[DESKTOP-R92CLF9:00858] Failing at address: (nil)
+./vertical_lifegame(+0xeaea)[0x55a630f76aea]
+[DESKTOP-R92CLF9:00859] [ 2] ./vertical_lifegame(+0xfbe9)[0x55a630f77be9]
+[DESKTOP-R92CLF9:00859] [ 3] [DESKTOP-R92CLF9:00857] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7f48edecc210]
+[DESKTOP-R92CLF9:00857] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f32e9c0b0b3]
+[DESKTOP-R92CLF9:00859] [ 4] ./vertical_lifegame(+0xda6e)[0x55a630f75a6e]
+[DESKTOP-R92CLF9:00859] *** End of error message ***
+[DESKTOP-R92CLF9:00856] *** Process received signal ***
+[ 1] ./vertical_lifegame(+0xeaea)[0x5588d825caea]
+[DESKTOP-R92CLF9:00857] [ 2] [DESKTOP-R92CLF9:00856] Signal: Segmentation fault (11)
+[DESKTOP-R92CLF9:00856] Signal code: Address not mapped (1)
+[DESKTOP-R92CLF9:00856] Failing at address: (nil)
+./vertical_lifegame(+0xfbe9)[0x5588d825dbe9]
+[DESKTOP-R92CLF9:00857] [ 3] [DESKTOP-R92CLF9:00858] [ 0] [DESKTOP-R92CLF9:00856] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7fda6d312210]
+[DESKTOP-R92CLF9:00856] [ 1] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7f48edead0b3]
+[DESKTOP-R92CLF9:00857] [ 4] ./vertical_lifegame(+0xda6e)[0x5588d825ba6e]
+[DESKTOP-R92CLF9:00857] *** End of error message ***
+/lib/x86_64-linux-gnu/libc.so.6(+0x46210)[0x7fd9a9443210]
+[DESKTOP-R92CLF9:00858] [ 1] ./vertical_lifegame(+0xeaea)[0x55dd4153aaea]
+[DESKTOP-R92CLF9:00858] [ 2] ./vertical_lifegame(+0xfbe9)[0x55dd4153bbe9]
+[DESKTOP-R92CLF9:00858] [ 3] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fd9a94240b3]
+[DESKTOP-R92CLF9:00858] [ 4] ./vertical_lifegame(+0xda6e)[0x55dd41539a6e]
+[DESKTOP-R92CLF9:00858] *** End of error message ***
+./vertical_lifegame(+0xeaea)[0x55915f916aea]
+[DESKTOP-R92CLF9:00856] [ 2] ./vertical_lifegame(+0xfbe9)[0x55915f917be9]
+[DESKTOP-R92CLF9:00856] [ 3] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3)[0x7fda6d2f30b3]
+[DESKTOP-R92CLF9:00856] [ 4] ./vertical_lifegame(+0xda6e)[0x55915f915a6e]
+[DESKTOP-R92CLF9:00856] *** End of error message ***
 --------------------------------------------------------------------------
 Primary job  terminated normally, but 1 process returned
 a non-zero exit code. Per user-direction, the job has been aborted.
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
-mpiexec noticed that process rank 0 with PID 2397 on node DESKTOP-781O8I6 exited on signal 11 (Segmentation fault).
+mpiexec noticed that process rank 2 with PID 858 on node DESKTOP-R92CLF9 exited on signal 11 (Segmentation fault).
 --------------------------------------------------------------------------
-[DESKTOP-781O8I6:02393] 1 more process has sent help message help-btl-vader.txt / cma-permission-denied
-[DESKTOP-781O8I6:02393] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
