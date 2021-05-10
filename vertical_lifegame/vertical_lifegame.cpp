@@ -87,7 +87,7 @@ int main(int argc, char* argv[]){
     }else{
         // printf("height %d\n", process_rows_number);
 
-        openfile.seekg(((dimension * 2)) * process_rank * process_rows_number ,ios::beg);  // przesunięcie o 1 linie = dlugosc*2
+        openfile.seekg(((dimension * 2)) * (process_rank - firstCalcProcRank) * process_rows_number ,ios::beg);  // przesunięcie o 1 linie = dlugosc*2
             
         int tmp;
         for (int i = 0; i < process_rows_number; i++)
