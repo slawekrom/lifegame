@@ -61,7 +61,9 @@ int main(int argc, char* argv[]){
     if (saveOutput){
         firstCalcProcRank = 1;
         process_rows_number = dimension / (size-1);
-        allocateMemory(dimension);
+        if (process_rank == 0){
+            allocateMemory(dimension);
+        }
     }
     // init grid for process
     int** grid = new int*[process_rows_number];
@@ -296,7 +298,9 @@ int main(int argc, char* argv[]){
     delete[] gridAfterIteration;
     delete[] rowDown;
     delete[] rowUp;
-    freeMemory(dimension);
+    if (saveOutput && process_rank == 0){
+        freeMemory(dimension);
+    }
 
      MPI_Finalize();
 }
