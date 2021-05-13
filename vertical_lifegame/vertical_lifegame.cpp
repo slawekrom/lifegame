@@ -45,7 +45,7 @@ int main(int argc, char* argv[]){
     int firstCalcProcRank = 0;
 
     if (saveOutput)
-    {
+    {   
         if (size < 3) {
         printf("You need at least 3 processes");
         MPI_Finalize();
@@ -126,9 +126,7 @@ int main(int argc, char* argv[]){
                     memcpy(matrix[rowNumber], recievedRow, sizeof(int) * dimension);
                 }
             }
-	    printf("dupa 1");
             saveToFile(matrix, dimension, k);
-            printf("no elo juz po");
 	}
     }
 
@@ -137,7 +135,6 @@ int main(int argc, char* argv[]){
         MPI_Request requests[2];
         MPI_Status status[2]; 
         //proces wysyła swój dolny wiersz do procesu "niżej" i  odbiera wirszy z wyższego procesu
-        
         MPI_Isend(grid[process_rows_number-1], dimension, MPI_INT, process_rank+1, 0, MPI_COMM_WORLD, &requests[0]);
         MPI_Irecv(rowDown, dimension, MPI_INT, process_rank+1, 0, MPI_COMM_WORLD, &requests[1]);
         
@@ -218,7 +215,7 @@ int main(int argc, char* argv[]){
         }
 
 
-    }else{
+    }else if (process_rank !=0){
         MPI_Request requests[4];
         MPI_Status status[4];
         //wysyła i dobiera z góry
@@ -275,11 +272,12 @@ int main(int argc, char* argv[]){
                 gridAfterIteration[process_rows_number-1][j] = 1;
             }
         }   
+        copyGrid(gridAfterIteration, grid, dimension, process_rows_number);
+        if (saveOutput){
+            sendGrid(gridAfterIteration, process_rows_number, dimension, process_rank);
+        }
     }
-    copyGrid(gridAfterIteration, grid, dimension, process_rows_number);
-    if (saveOutput){
-        sendGrid(gridAfterIteration, process_rows_number, dimension, process_rank);
-    }
+   
     }
     if (process_rank == 0){
         auto end_time = std::chrono::high_resolution_clock::now();
@@ -287,12 +285,12 @@ int main(int argc, char* argv[]){
         cout<<"matrix size: "<<dimension<<" iterations: "<<iterationsNumer<<" time: "<<time/std::chrono::milliseconds(1)<<endl;          
     }
 
-    for (int i = 0; i < dimension; i++) {
+    for (int i = 0; i < process_rows_number; i++) {
         delete[] grid[i];
     }
     delete[] grid;
 
-    for (int i = 0; i < dimension; i++) {
+    for (int i = 0; i < process_rows_number; i++) {
         delete[] gridAfterIteration[i];
     }
     delete[] gridAfterIteration;
@@ -415,8 +413,9 @@ void iterate(int **grid, int **gridAfterIteration, int dimension, int height, in
     }
 }
 void allocateMemory(int dimension){
+    matrix = new int*[dimension];
     for (int i = 0; i < dimension; i++) {
-        matrix[i] = new int[dimension];
+        matrix[i] = new int[dimension]; 
     }
     recievedRow = (int*)malloc(sizeof(int)*dimension);
 }
@@ -425,11 +424,12 @@ void freeMemory(int dimension){
         delete[] matrix[i];
     }
     delete[] matrix;
+    delete[] recievedRow;
 }
 void sendGrid(int **grid, int height, int length, int process_rank){
     for (int i = 0; i < height; i++)
     {
-        MPI_Send(grid[i], length, MPI_INT, 0, (process_rank-1)  * height + i, MPI_COMM_WORLD);
+        MPI_Send(grid[i], length, MPI_INT, 0, ((process_rank-1)  * height) + i, MPI_COMM_WORLD);
     }
-    delete[] recievedRow;
+
 }
